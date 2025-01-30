@@ -1,0 +1,130 @@
+﻿@model RegisterDTO
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <style>
+        /* Input ve Select Alanlarını Uygun Hale Getirmek */
+        .inputbox {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+            .inputbox select {
+                width: 100%; /* Tam genişlik */
+                padding: 10px; /* İçerik boşluğu */
+                border-radius: 5px; /* Yuvarlak köşeler */
+                font-size: 15px; /* Yazı boyutu */
+                box-sizing: border-box; /* Border-box için içerik ölçüsü */
+                background-color: transparent; /* Arka plan rengi */
+                transition: border-color 0.3s ease; /* Border renginin geçişi */
+            }
+
+                .inputbox select:focus {
+                    border-color: #007bff; /* Seçildiğinde kenarlık rengi */
+                    outline: none; /* Focus outline'ı kaldır */
+                }
+
+            .inputbox label {
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                font-size: 12px;
+                padding: 0 5px;
+            }
+    </style>
+    <link rel="stylesheet" href="~/Login/index.css">
+    <title>Kayıt Ol</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="post" asp-action="KayitOl">
+                    <h2>Kayıt Ol</h2>
+
+                    <div class="inputbox">
+                        <input type="text" asp-for="TC" required>
+                        <label for="">TC Kimlik No</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="text" asp-for="Isim" required>
+                        <label for="">Isim Soyisim</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="password" asp-for="Sifre" required>
+                        <label for="">Şifre</label>
+                    </div>
+
+                    <!-- Doktorlar için Sertifika No -->
+                    <div id="sertifikaField" style="display: none;">
+                        <div class="inputbox">
+                            <input type="text" asp-for="SertifikaNo" id="sertifikaNo">
+                            <label for="">Sertifika No</label>
+                        </div>
+                    </div>
+
+                    <!-- Poliklinik Seçimi (Sadece Doktorlar İçin) -->
+                    <div id="poliklinikField" style="display: none;">
+                        <div class="inputbox">
+                            <select asp-for="PoliklinikId" class="form-control" required>
+                                <option value="">Poliklinik Seçiniz</option>
+                                @foreach (var poliklinik in ViewBag.Poliklinikler)
+                                {
+                                    <option value="@poliklinik.Id">@poliklinik.Ad</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Kullanıcı Türü Seçimi -->
+                    <div id="userType">
+                        <label for="doktor">Doktor</label>
+                        <input type="radio" id="doktor" name="userType" value="Doktor" required>
+
+                        <label for="hasta">Hasta</label>
+                        <input type="radio" id="hasta" name="userType" value="Hasta" checked required>
+                    </div>
+
+                    <button type="submit">Kayıt Ol</button>
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-danger" style="text-align:center">@ViewBag.Message</div>
+                    }
+
+                    <div class="register">
+                        <p>Zaten hesabın var mı? <a href="/Auth/GirisYap">Giriş Yap</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            // Kullanıcı türü seçimi yapıldığında
+            $('input[name="userType"]').on('click', function () {
+                if ($(this).val() === 'Doktor') {
+                    $('#sertifikaField').slideDown();  // Sertifika alanını göster
+                    $('#sertifikaNo').prop('required', true);  // Sertifika numarasını zorunlu yap
+                    $('#poliklinikField').slideDown(); // Poliklinik seçim alanını göster
+                } else {
+                    $('#sertifikaField').slideUp();  // Sertifika alanını gizle
+                    $('#sertifikaNo').prop('required', false);  // Sertifika numarasını zorunlu yapma
+                    $('#poliklinikField').slideUp(); // Poliklinik seçim alanını gizle
+                }
+            });
+        });
+    </script>
+
+
+</body>
+</html>
