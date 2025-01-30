@@ -4,7 +4,6 @@ namespace HospitalWeb.Models.Domain
 {
     public class Hasta : BaseEntity
     {
-        [Key]
         public string? TC { get; set; } // Hasta TC
         public string? Isim { get; set; } // Hasta Adı Soyadı
         public string? Sifre { get; set; } // Hasta Şifre

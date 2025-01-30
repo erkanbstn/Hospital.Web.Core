@@ -1,0 +1,37 @@
+﻿@model Hasta
+
+@{
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="title">
+    <i class="uil uil-user"></i>
+    <span class="text">Profil Bilgileri</span>
+</div>
+
+<form method="post">
+    <div class="form-container">
+        <h2>Profilinizi Düzenleyin</h2>
+        <div class="inputbox">
+            <label for="Isim">İsim Soyisim</label>
+            <input type="text" asp-for="Isim" class="form-control" required />
+        </div>
+        <br />
+        <div class="inputbox">
+            <label for="TC">TC</label>
+            <input type="text" asp-for="TC" class="form-control" required />
+        </div>
+        <br />
+        <div class="inputbox">
+            <label for="Sifre">Şifre</label>
+            <input type="text" asp-for="Sifre" class="form-control" required />
+        </div>
+        <br />
+        <br />
+        <input type="hidden" asp-for="Id" class="form-control" required readonly />
+        <button type="submit" class="btn btn-primary">Bilgileri Güncelle</button>
+    </div>
+</form>
+

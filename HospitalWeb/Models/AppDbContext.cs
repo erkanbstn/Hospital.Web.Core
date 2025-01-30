@@ -38,14 +38,14 @@ namespace HospitalWeb.Models
             modelBuilder.Entity<Randevu>()
                 .HasOne(r => r.Doktor)  // Her randevu bir doktora aittir
                 .WithMany(d => d.Randevular)  // Bir doktorun birden fazla randevusu olabilir
-                .HasForeignKey(r => r.DoktorTC)  // Randevu tablosundaki DoktorTC alanı, Doktor tablosuna referans verir
+                .HasForeignKey(r => r.DoktorId)  // Randevu tablosundaki DoktorTC alanı, Doktor tablosuna referans verir
                 .OnDelete(DeleteBehavior.Restrict); // Doktor silindiğinde ona bağlı randevular silinmez
 
             // Hasta ve Randevu arasındaki ilişki (1-N)
             modelBuilder.Entity<Randevu>()
                 .HasOne(r => r.Hasta)  // Her randevu bir hastaya aittir
                 .WithMany(h => h.Randevular)  // Bir hastanın birden fazla randevusu olabilir
-                .HasForeignKey(r => r.HastaTC)  // Randevu tablosundaki HastaTC alanı, Hasta tablosuna referans verir
+                .HasForeignKey(r => r.HastaId)  // Randevu tablosundaki HastaTC alanı, Hasta tablosuna referans verir
                 .OnDelete(DeleteBehavior.Restrict); // Hasta silindiğinde ona bağlı randevular silinmez
 
             // Poliklinik ve Randevu arasındaki ilişki (1-N)
@@ -59,14 +59,14 @@ namespace HospitalWeb.Models
             modelBuilder.Entity<Recete>()
                 .HasOne(re => re.Doktor)  // Her reçete bir doktora aittir
                 .WithMany(d => d.Receteler)  // Bir doktorun birden fazla reçetesi olabilir
-                .HasForeignKey(re => re.DoktorTC)  // Recete tablosundaki DoktorTC alanı, Doktor tablosuna referans verir
+                .HasForeignKey(re => re.DoktorId)  // Recete tablosundaki DoktorTC alanı, Doktor tablosuna referans verir
                 .OnDelete(DeleteBehavior.Restrict); // Doktor silindiğinde reçeteler silinmez
 
             // Hasta ve Reçete arasındaki ilişki (1-N)
             modelBuilder.Entity<Recete>()
                 .HasOne(re => re.Hasta)  // Her reçete bir hastaya aittir
                 .WithMany(h => h.Receteler)  // Bir hastanın birden fazla reçetesi olabilir
-                .HasForeignKey(re => re.HastaTC)  // Recete tablosundaki HastaTC alanı, Hasta tablosuna referans verir
+                .HasForeignKey(re => re.HastaId)  // Recete tablosundaki HastaTC alanı, Hasta tablosuna referans verir
                 .OnDelete(DeleteBehavior.Restrict); // Hasta silindiğinde reçeteler silinmez
 
             // Doktor ve Poliklinik arasındaki ilişki (1-N)

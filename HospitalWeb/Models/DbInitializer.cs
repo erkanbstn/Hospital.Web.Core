@@ -60,8 +60,8 @@ namespace HospitalWeb.Models
 
                 randevular.Add(new Randevu
                 {
-                    HastaTC = randomHasta.TC,
-                    DoktorTC = randomDoktor.TC,
+                    HastaId = randomHasta.Id,
+                    DoktorId = randomDoktor.Id,
                     PoliklinikId = poliklinik.Id,
                     Tarih = DateTime.Now.AddDays(random.Next(1, 30)) // 1 ile 30 gün arasında rastgele bir tarih
                 });
@@ -78,8 +78,8 @@ namespace HospitalWeb.Models
 
                 receteler.Add(new Recete
                 {
-                    HastaTC = randomHasta.TC,
-                    DoktorTC = randomDoktor.TC,
+                    HastaId = randomHasta.Id,
+                    DoktorId = randomDoktor.Id,
                     Teshis = $"Teşhis {i + 1}",
                     IlacAdi = $"İlaç {i + 1}"
                 });

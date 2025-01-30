@@ -4,7 +4,6 @@ namespace HospitalWeb.Models.Domain
 {
     public class Doktor : BaseEntity
     {
-        [Key]
         public string? TC { get; set; } // Doktor TC
         public string? Isim { get; set; } // Doktor Adı Soyadı
         public string? Uzmanlik { get; set; } // Doktor Uzmanlığı
