@@ -49,7 +49,7 @@
                     <h2>Kayıt Ol</h2>
 
                     <div class="inputbox">
-                        <input type="text" asp-for="TC" required>
+                        <input type="text" asp-for="TC" required maxlength="11">
                         <label for="">TC Kimlik No</label>
                     </div>
 
@@ -74,7 +74,7 @@
                     <!-- Poliklinik Seçimi (Sadece Doktorlar İçin) -->
                     <div id="poliklinikField" style="display: none;">
                         <div class="inputbox">
-                            <select asp-for="PoliklinikId" class="form-control" required>
+                            <select asp-for="PoliklinikId" class="form-control">
                                 <option value="">Poliklinik Seçiniz</option>
                                 @foreach (var poliklinik in ViewBag.Poliklinikler)
                                 {
@@ -87,18 +87,18 @@
                     <!-- Kullanıcı Türü Seçimi -->
                     <div id="userType">
                         <label for="doktor">Doktor</label>
-                        <input type="radio" id="doktor" name="userType" value="Doktor" required>
+                        <input type="radio" id="doktor" name="userType" value="Doktor">
 
                         <label for="hasta">Hasta</label>
-                        <input type="radio" id="hasta" name="userType" value="Hasta" checked required>
+                        <input type="radio" id="hasta" name="userType" value="Hasta" checked>
                     </div>
-
-                    <button type="submit">Kayıt Ol</button>
 
                     @if (ViewBag.Message != null)
                     {
                         <div class="alert alert-danger" style="text-align:center">@ViewBag.Message</div>
                     }
+
+                    <button type="submit">Kayıt Ol</button>
 
                     <div class="register">
                         <p>Zaten hesabın var mı? <a href="/Auth/GirisYap">Giriş Yap</a></p>
@@ -113,13 +113,12 @@
             // Kullanıcı türü seçimi yapıldığında
             $('input[name="userType"]').on('click', function () {
                 if ($(this).val() === 'Doktor') {
-                    $('#sertifikaField').slideDown();  // Sertifika alanını göster
-                    $('#sertifikaNo').prop('required', true);  // Sertifika numarasını zorunlu yap
-                    $('#poliklinikField').slideDown(); // Poliklinik seçim alanını göster
+                    $('#sertifikaField #poliklinikField').slideDown();  // Sertifika alanını göster
+                    $('#sertifikaNo #poliklinik').prop('required',true);
                 } else {
-                    $('#sertifikaField').slideUp();  // Sertifika alanını gizle
-                    $('#sertifikaNo').prop('required', false);  // Sertifika numarasını zorunlu yapma
-                    $('#poliklinikField').slideUp(); // Poliklinik seçim alanını gizle
+                    $('#sertifikaField #poliklinikField').slideUp();  // Sertifika alanını gizle
+                    $('#sertifikaNo #poliklinik').prop('required',false).val('');
+
                 }
             });
         });

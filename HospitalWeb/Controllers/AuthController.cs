@@ -106,6 +106,11 @@ namespace HospitalWeb.Controllers
 
             if (existingUser)
             {
+                // Poliklinik verilerini veri tabanından çek
+                var poliklinikler = _appDbContext.Poliklinikler.ToList();
+
+                // Poliklinikleri ViewBag ile View'a aktar
+                ViewBag.Poliklinikler = poliklinikler;
                 ViewBag.Message = "Bu TC kimlik numarası zaten kayıtlı!";
                 return View();
             }
