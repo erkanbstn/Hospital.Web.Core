@@ -1,4 +1,4 @@
-﻿@model Hasta
+﻿@model Doktor
 
 @{
     ViewData["Title"] = "Profil";
@@ -25,6 +25,11 @@
         </div>
         <br />
         <div class="inputbox">
+            <label for="Uzmanlik">Uzmanlık</label>
+            <input type="text" asp-for="Uzmanlik" class="form-control" required readonly />
+        </div>
+        <br />
+        <div class="inputbox">
             <label for="Sifre">Şifre</label>
             <input type="text" asp-for="Sifre" class="form-control" required />
         </div>
@@ -45,7 +50,7 @@
                 var formData = $(this).serialize(); // Formdaki verileri al
 
                 $.ajax({
-                    url: '@Url.Action("ProfilGuncelle", "Hasta")',
+                    url: '@Url.Action("ProfilGuncelle", "Doktor")',
                     type: 'POST',
                     data: formData,
                     success: function (response) {

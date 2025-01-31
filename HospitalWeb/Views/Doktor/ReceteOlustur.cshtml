@@ -1,0 +1,80 @@
+﻿@model List<Hasta>
+
+@{
+    ViewData["Title"] = "Reçete Gir";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-notes"></i>
+    <span class="text">Reçete Gir</span>
+</div>
+
+<!-- Hastaları seç -->
+<div class="form-container">
+    <h2>Reçete Gireceğiniz Hastayı Seçin</h2>
+    <br />
+    <div class="inputbox">
+        <label for="HastaSelect">Hasta Seçin</label>
+        <select id="HastaSelect" class="form-control">
+            <option value="">Bir Hasta Seçin</option>
+            @foreach (var hasta in Model)
+            {
+                <option value="@hasta.Id">@hasta.Isim</option>
+            }
+        </select>
+    </div>
+    <br />
+
+    <!-- İlaç Adı -->
+    <div class="inputbox">
+        <label for="IlacAdi">İlaç Adı</label>
+        <input type="text" id="IlacAdi" class="form-control" required />
+    </div>
+    <br />
+
+    <!-- Reçete Açıklaması -->
+    <div class="inputbox">
+        <label for="Teshis">Teşhis</label>
+        <textarea id="Teshis" class="form-control" required></textarea>
+    </div>
+    <br />
+
+    <!-- Reçete Gir Butonu -->
+    <button id="ReceteGirBtn" class="btn btn-primary">Reçeteyi Gir</button>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#ReceteGirBtn').on('click', function () {
+                var hastaId = $('#HastaSelect').val();
+                var ilacAdi = $('#IlacAdi').val();
+                var teshis = $('#Teshis').val();
+
+                if (!hastaId || !ilacAdi || !teshis) {
+                    alert("Lütfen tüm alanları doldurun.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("ReceteOlustur", "Doktor")',
+                    type: 'POST',
+                    data: {
+                        hastaId: hastaId,
+                        ilacAdi: ilacAdi,
+                        teshis: teshis
+                    },
+                    success: function (response) {
+                        alert(response);
+                        window.location.href = '@Url.Action("Recetelerim", "Doktor")';
+                    },
+                    error: function () {
+                        alert("Reçete girilirken hata oluştu.");
+                    }
+                });
+            });
+        });
+    </script>
+}

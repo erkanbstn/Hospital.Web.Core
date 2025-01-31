@@ -23,7 +23,18 @@
 <body>
     <nav>
         <div class="logo-name">
-            <span class="logo_name">Deniz Hospital</span>
+            <span class="logo_name">
+                Deniz Hospital
+                @if (User.IsInRole("Hasta"))
+                {
+                    <span>Hasta</span>
+                }
+                @if (User.IsInRole("Doktor"))
+                {
+                    <span>Doktor</span>
+                }
+            </span>
+
         </div>
 
         <div class="menu-items">
@@ -68,41 +79,46 @@
                     </li>
                 }
 
-                @if (User.IsInRole("Doktor")) 
+                @if (User.IsInRole("Doktor"))
                 {
-                <li>
-                    <a href="/Doktor/Profil">
-                            <i class="uil uil-user-md"></i>
-                        <span class="link-name">Profilim</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Doktor/Randevular">
-                            <i class="uil uil-calendar-alt"></i>
-                        <span class="link-name">Randevularım</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Doktor/Hastalar">
-                            <i class="uil uil-user-injured"></i>
-                        <span class="link-name">Hastalar</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Doktor/Recetelerim">
-                            <i class="uil uil-file-medical"></i>
-                        <span class="link-name">Reçetelerim</span>
-                    </a>
-                </li>
                     <li>
-                        <a href="/Doktor/ReceteOlustur">
-                            <i class="uil uil-prescription-bottle"></i>
+                        <a href="/Doktor/Profil">
+                            <i class="uil uil-user-md"></i>
+                            <span class="link-name">Profilim</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Doktor/Randevularim">
+                            <i class="uil uil-calendar-alt"></i>
+                            <span class="link-name">Randevularım</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Doktor/Poliklinikler">
+                            <i class="uil uil-hospital"></i>
+                            <span class="link-name">Poliklinikler</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Doktor/Hastalar">
+                            <i class="uil uil-user"></i>
+                            <span class="link-name">Hastalar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Doktor/Recetelerim">
+                            <i class="uil uil-file-medical"></i>
                             <span class="link-name">Reçetelerim</span>
                         </a>
                     </li>
-                }
+                    <li>
+                        <a href="/Doktor/ReceteOlustur">
+                            <i class="uil uil-prescription-bottle"></i>
+                            <span class="link-name">Reçete Yaz</span>
+                        </a>
+                    </li>
+                }               
             </ul>
-
 
             <ul class="logout-mode">
                 <li>

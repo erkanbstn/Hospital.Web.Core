@@ -1,14 +1,15 @@
 ﻿using HospitalWeb.Models;
 using HospitalWeb.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalWeb.Controllers
 {
+    [Authorize(Roles = "Hasta")]
     public class HastaController : Controller
     {
         private readonly AppDbContext _appDbContext;
-
         public HastaController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;

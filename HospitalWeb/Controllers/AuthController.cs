@@ -32,8 +32,8 @@ namespace HospitalWeb.Controllers
         public async Task<IActionResult> GirisYap(LoginDTO loginDto)
         {
             // Kullanıcı (Hasta veya Doktor) veritabanında var mı kontrol et
-            var hasta = await _appDbContext.Hastalar.FirstOrDefaultAsync(h => h.TC == loginDto.TC);
-            var doktor = await _appDbContext.Doktorlar.FirstOrDefaultAsync(d => d.TC == loginDto.TC);
+            var hasta = await _appDbContext.Hastalar.FirstOrDefaultAsync(h => h.TC == loginDto.TC && h.Sifre == loginDto.Sifre);
+            var doktor = await _appDbContext.Doktorlar.FirstOrDefaultAsync(d => d.TC == loginDto.TC && d.Sifre == loginDto.Sifre);
 
             object user = hasta ?? (object)doktor; // Eğer hasta varsa onu, yoksa doktoru al
             string role = hasta != null ? "Hasta" : doktor != null ? "Doktor" : null; // Kullanıcının rolü
@@ -71,7 +71,7 @@ namespace HospitalWeb.Controllers
             if (role == "Hasta")
                 return RedirectToAction("RandevuAl", "Hasta"); // Hastayı randevu sayfasına yönlendir
             else
-                return RedirectToAction("ReceteYaz", "Doktor"); // Doktoru reçete yazma sayfasına yönlendir
+                return RedirectToAction("Hastalar", "Doktor"); // Doktoru reçete yazma sayfasına yönlendir
         }
 
         // Kullanıcı çıkış işlemi

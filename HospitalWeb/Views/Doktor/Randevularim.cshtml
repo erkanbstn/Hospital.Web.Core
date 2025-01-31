@@ -1,0 +1,44 @@
+﻿@model List<Randevu>
+
+@{
+    ViewData["Title"] = "Randevularım";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-calendar-check"></i>
+    <span class="text">Randevularım</span>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Hasta</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr id="randevu-@randevu.Id">
+                <td>@randevu.Hasta.Isim</td>
+                <td>@randevu.Tarih.ToString("dd/MM/yyyy | HH:mm:ss")</td>
+                <td>
+                    @if (randevu.Status == false)
+                    {
+                        <span class="badge bg-danger">İptal Edildi</span>
+                    }
+                    else if (randevu.Tarih > DateTime.Now)
+                    {
+                        <span class="badge bg-success">Yaklaşan</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Geçmiş</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

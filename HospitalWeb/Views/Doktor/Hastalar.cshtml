@@ -1,0 +1,64 @@
+﻿@model List<Hasta>
+
+@{
+    ViewData["Title"] = "Hastalar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-users-alt"></i>
+    <span class="text">Hastalar</span>
+</div>
+
+<div class="patient-list">
+    @foreach (var hasta in Model)
+    {
+        <div class="patient-card">
+            <div class="patient-info">
+                <span class="patient-name">@hasta.Isim</span>
+                <span class="patient-tc">TC: @hasta.TC</span>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .patient-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .patient-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease;
+    }
+
+        .patient-card:hover {
+            transform: scale(1.03);
+        }
+
+    .patient-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .patient-name {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: black;
+    }
+
+    .patient-tc {
+        font-size: 0.9em;
+        color: #ccc;
+    }
+</style>
