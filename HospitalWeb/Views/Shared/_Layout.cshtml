@@ -28,7 +28,6 @@
 
         <div class="menu-items">
             <ul class="nav-links">
-                <!-- Hasta menüsü -->
                 @if (User.IsInRole("Hasta"))
                 {
                     <li>
@@ -39,58 +38,71 @@
                     </li>
                     <li>
                         <a href="/Hasta/Recetelerim">
-                            <i class="uil uil-notes"></i>
+                            <i class="uil uil-file-medical-alt"></i>
                             <span class="link-name">Reçetelerim</span>
                         </a>
                     </li>
                     <li>
                         <a href="/Hasta/Randevularim">
-                            <i class="uil uil-calendar-check"></i>
+                            <i class="uil uil-schedule"></i>
                             <span class="link-name">Randevularım</span>
                         </a>
                     </li>
                     <li>
+                        <a href="/Hasta/RandevuAl">
+                            <i class="uil uil-clock"></i>
+                            <span class="link-name">Randevu Al</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/Hasta/Doktorlar">
-                            <i class="uil uil-estate"></i>
+                            <i class="uil uil-stethoscope"></i>
                             <span class="link-name">Doktorlar</span>
                         </a>
                     </li>
                     <li>
                         <a href="/Hasta/Poliklinikler">
-                            <i class="uil uil-clinic"></i>
+                            <i class="uil uil-hospital"></i>
                             <span class="link-name">Poliklinikler</span>
                         </a>
                     </li>
                 }
-                <!-- Doktor menüsü -->
-                else if (User.IsInRole("Doktor"))
+
+                @if (User.IsInRole("Doktor")) 
                 {
                 <li>
                     <a href="/Doktor/Profil">
-                        <i class="uil uil-user-circle"></i>
+                            <i class="uil uil-user-md"></i>
                         <span class="link-name">Profilim</span>
                     </a>
                 </li>
                 <li>
                     <a href="/Doktor/Randevular">
-                        <i class="uil uil-calendar-alt"></i>
+                            <i class="uil uil-calendar-alt"></i>
                         <span class="link-name">Randevularım</span>
                     </a>
                 </li>
                 <li>
                     <a href="/Doktor/Hastalar">
-                        <i class="uil uil-users-alt"></i>
+                            <i class="uil uil-user-injured"></i>
                         <span class="link-name">Hastalar</span>
                     </a>
                 </li>
                 <li>
                     <a href="/Doktor/Recetelerim">
-                        <i class="uil uil-notes"></i>
+                            <i class="uil uil-file-medical"></i>
                         <span class="link-name">Reçetelerim</span>
                     </a>
                 </li>
+                    <li>
+                        <a href="/Doktor/ReceteOlustur">
+                            <i class="uil uil-prescription-bottle"></i>
+                            <span class="link-name">Reçetelerim</span>
+                        </a>
+                    </li>
                 }
             </ul>
+
 
             <ul class="logout-mode">
                 <li>
@@ -150,6 +162,7 @@
         </div>
     </section>
     <script src="~/Sidebar/script.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
-</html>
+</html> 

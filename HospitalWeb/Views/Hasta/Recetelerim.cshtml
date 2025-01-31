@@ -1,0 +1,44 @@
+﻿@model List<Recete>
+
+@{
+    ViewData["Title"] = "Reçetelerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-notes"></i>
+    <span class="text">Reçetelerim</span>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Doktor</th>
+            <th>Teşhis</th>
+            <th>Tarih</th>
+            <th>İlaçlar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recete in Model)
+        {
+            <tr>
+                <td>@(recete.Doktor != null ? recete.Doktor.Isim : "Doktor Bilgisi Yok")</td>
+                <td>@recete.Teshis</td>
+                <td>@(recete.CreatedAt.HasValue ? recete.CreatedAt.Value.ToString("dd/MM/yyyy | HH/mm/ss") : "Tarih Yok")</td>
+                <td>
+                    <ul>
+                        @if (!string.IsNullOrEmpty(recete.IlacAdi))
+                        {
+                            var ilaclar = recete.IlacAdi.Split(','); // Virgülle ayır
+                            foreach (var ilac in ilaclar)
+                            {
+                                <li>@ilac.Trim()</li> <!-- Her bir ilacı madde madde listele -->
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

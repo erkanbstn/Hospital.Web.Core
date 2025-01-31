@@ -1,0 +1,45 @@
+﻿@model List<Poliklinik>
+
+@{
+    ViewData["Title"] = "Poliklinikler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-clinic"></i>
+    <span class="text">Poliklinikler</span>
+</div>
+
+<div class="list-group">
+    @foreach (var poliklinik in Model)
+    {
+        <a href="#" class="list-group-item list-group-item-action poliklinik-item" data-id="@poliklinik.Id">
+            <i class="uil uil-clinic-medical"></i> @poliklinik.Ad
+        </a>
+    }
+</div>
+
+<div id="doktorlarContainer" class="mt-4"></div>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        $(".poliklinik-item").click(function () {
+            var poliklinikId = $(this).data("id");
+
+            $.ajax({
+                url: '@Url.Action("DoktorlariGetir", "Hasta")',
+                type: 'GET',
+                data: { poliklinikId: poliklinikId },
+                success: function (data) {
+                    $("#doktorlarContainer").html(data);
+                },
+                error: function () {
+                    alert("Doktorlar yüklenirken hata oluştu.");
+                }
+            });
+        });
+    });
+</script>
+}

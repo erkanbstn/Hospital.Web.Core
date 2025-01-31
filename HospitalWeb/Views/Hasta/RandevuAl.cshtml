@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Randevu Al";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-calendar-alt"></i>
+    <span class="text">Randevu Al</span>
+</div>
+
+<div class="form-container">
+    <h2>Randevu Detayları</h2>
+    <br />
+    <!-- Tarih ve Saat Seçimi -->
+    <div class="inputbox">
+        <label for="SelectedDate">Tarih Seçin</label>
+        <input type="date" id="SelectedDate" class="form-control" required />
+    </div>
+    <br />
+    <div class="inputbox">
+        <label for="SelectedTime">Saat Seçin</label>
+        <input type="time" id="SelectedTime" class="form-control" required disabled />
+    </div>
+    <br />
+    <!-- Poliklinik Seçimi -->
+    <div class="inputbox">
+        <label for="PoliklinikSelect">Poliklinik Seçin</label>
+        <select id="PoliklinikSelect" class="form-control" disabled>
+            <option value="">Önce tarih seçiniz</option>
+        </select>
+    </div>
+    <br />
+    <!-- Doktor Seçimi -->
+    <div class="inputbox">
+        <label for="DoktorSelect">Doktor Seçin</label>
+        <select id="DoktorSelect" class="form-control" disabled>
+            <option value="">Önce poliklinik seçiniz</option>
+        </select>
+    </div>
+    <br />
+    <!-- Randevu Al Butonu -->
+    <button id="RandevuAlBtn" class="btn btn-success" style="display: none;">Randevu Al</button>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            let selectedDate, selectedPoliklinik, selectedDoktor, selectedTime;
+
+            // Tarih Seçildiğinde Poliklinikleri Getir
+            $('#SelectedDate').on('change', function () {
+                selectedDate = $(this).val();
+                if (selectedDate) {
+                    $.ajax({
+                        url: '@Url.Action("GetPolikliniklerByDate", "Hasta")',
+                        type: 'POST',
+                        data: { selectedDate: selectedDate },
+                        success: function (data) {
+                            $('#PoliklinikSelect').html(data).prop('disabled', false);
+                            $('#SelectedTime').prop('disabled', false); // Saat seçimi aktif
+                        },
+                        error: function () {
+                            alert("Poliklinikler yüklenirken hata oluştu.");
+                        }
+                    });
+                }
+            });
+
+            // Poliklinik Seçildiğinde Doktorları Getir
+            $('#PoliklinikSelect').on('change', function () {
+                selectedPoliklinik = $(this).val();
+                if (selectedPoliklinik) {
+                    $.ajax({
+                        url: '@Url.Action("GetDoktorlarByPoliklinik", "Hasta")',
+                        type: 'POST',
+                        data: { poliklinikId: selectedPoliklinik },
+                        success: function (data) {
+                            $('#DoktorSelect').html(data).prop('disabled', false);
+                        },
+                        error: function () {
+                            alert("Doktorlar yüklenirken hata oluştu.");
+                        }
+                    });
+                }
+            });
+
+            // Doktor Seçildiğinde Butonu Göster
+            $('#DoktorSelect').on('change', function () {
+                selectedDoktor = $(this).val();
+                if (selectedDoktor) {
+                    $('#RandevuAlBtn').show();
+                } else {
+                    $('#RandevuAlBtn').hide();
+                }
+            });
+
+            // Randevu Al Butonu Tıklanınca Randevu Oluştur
+            $('#RandevuAlBtn').on('click', function () {
+                selectedTime = $('#SelectedTime').val(); // Saat seçimini al
+                if (!selectedTime) {
+                    alert("Lütfen bir saat seçin.");
+                    return;
+                }
+
+                let selectedDateTime = selectedDate + ' ' + selectedTime; // Tarih ve saati birleştir
+
+                $.ajax({
+                    url: '@Url.Action("RandevuOlustur", "Hasta")',
+                    type: 'POST',
+                    data: {
+                        selectedDate: selectedDateTime,
+                        doktorId: selectedDoktor,
+                        poliklinikId: selectedPoliklinik
+                    },
+                    success: function (response) {
+                        alert(response);
+                        window.location.href = '@Url.Action("Randevularim", "Hasta")';
+                    },
+                    error: function () {
+                        alert("Randevu oluşturulurken hata oluştu.");
+                    }
+                });
+            });
+        });
+    </script>
+}

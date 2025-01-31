@@ -1,0 +1,87 @@
+﻿@model List<Randevu>
+
+@{
+    ViewData["Title"] = "Randevularım";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-calendar-check"></i>
+    <span class="text">Randevularım</span>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Doktor</th>
+            <th>Poliklinik</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>İptal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr id="randevu-@randevu.Id">
+                <td>@randevu.Doktor.Isim</td>
+                <td>@randevu.Poliklinik.Ad</td>
+                <td>@randevu.Tarih.ToString("dd/MM/yyyy | HH/mm/ss")</td>
+                <td>
+                    @if (randevu.Tarih > DateTime.Now)
+                    {
+                        <span class="badge bg-success">Yaklaşan</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Geçmiş</span>
+                    }
+                </td>
+                <td>
+                    @if (randevu.Tarih > DateTime.Now && randevu.Status == true)
+                    {
+                        <button class="badge bg-danger btn-iptal" data-id="@randevu.Id">İptal Et</button>
+                    }
+                    else
+                    {
+                        @if (randevu.Status == false)
+                        {
+                            <span class="badge bg-black">İptal Edilmiş</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-primary">İptal Edilemez</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            // İptal Et butonuna tıklanırsa
+            $('.btn-iptal').on('click', function () {
+                var randevuId = $(this).data('id'); // Tıklanan butonun bağlı olduğu randevu ID'si
+
+                // İptal işlemi için AJAX çağrısı
+                $.ajax({
+                    url: '@Url.Action("IptalEt", "Hasta")', // RandevuController'da IptalEt metoduna
+                    type: 'POST',
+                    data: { id: randevuId },
+                    success: function (response) {
+                        // Başarılı olursa, ilgili satırı sil ve mesajı göster
+                        alert('Randevu iptal edildi!');
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Randevu iptali sırasında hata oluştu.");
+                    }
+                });
+            });
+        });
+    </script>
+}

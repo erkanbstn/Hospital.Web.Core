@@ -1,0 +1,22 @@
+﻿@model List<Doktor>
+
+<div class="title">
+    <i class="uil uil-stethoscope"></i>
+    <span class="text">Doktorlar</span>
+</div>
+
+@if (Model.Count == 0)
+{
+    <p class="text-danger">Bu poliklinikte doktor bulunmamaktadır.</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var doktor in Model)
+        {
+            <a href="#" class="list-group-item list-group-item-action doktor-item" data-id="@doktor.Id">
+                <i class="uil uil-user-md"></i> @doktor.Isim
+            </a>
+        }
+    </div>
+}

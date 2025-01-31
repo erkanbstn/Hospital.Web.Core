@@ -56,7 +56,7 @@ namespace HospitalWeb.Controllers
             // Kullanıcıya ait claim'ler oluşturuluyor
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, loginDto.TC), // Kullanıcı TC
+                new Claim(ClaimTypes.Name, loginDto.TC), // Kullanıcı TC
                 new Claim(ClaimTypes.Role, role), // Kullanıcı Rolü (Hasta veya Doktor)
             };
 
@@ -80,7 +80,7 @@ namespace HospitalWeb.Controllers
             // Kullanıcıyı oturumdan çıkarmak
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             // Login sayfasına yönlendir
-            return RedirectToAction("HastaGiris", "Auth");
+            return RedirectToAction("GirisYap", "Auth");
         }
 
         // GET: Kullanıcı Kayıt Sayfası

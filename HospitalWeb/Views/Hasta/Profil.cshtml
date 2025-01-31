@@ -10,10 +10,10 @@
     <i class="uil uil-user"></i>
     <span class="text">Profil Bilgileri</span>
 </div>
-
-<form method="post">
+<form method="post" id="profilForm">
     <div class="form-container">
         <h2>Profilinizi Düzenleyin</h2>
+        <br />
         <div class="inputbox">
             <label for="Isim">İsim Soyisim</label>
             <input type="text" asp-for="Isim" class="form-control" required />
@@ -21,7 +21,7 @@
         <br />
         <div class="inputbox">
             <label for="TC">TC</label>
-            <input type="text" asp-for="TC" class="form-control" required />
+            <input type="text" asp-for="TC" class="form-control" required readonly />
         </div>
         <br />
         <div class="inputbox">
@@ -35,3 +35,28 @@
     </div>
 </form>
 
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#profilForm").on("submit", function (e) {
+                e.preventDefault(); // Formun normal submit işlemini engelle
+
+                var formData = $(this).serialize(); // Formdaki verileri al
+
+                $.ajax({
+                    url: '@Url.Action("ProfilGuncelle", "Hasta")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        alert(response);
+                        location.reload(); // Sayfayı yenile
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Profil güncellenirken hata oluştu: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}

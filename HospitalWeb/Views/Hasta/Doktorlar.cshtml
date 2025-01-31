@@ -1,0 +1,81 @@
+﻿@model List<Doktor>
+
+@{
+    ViewData["Title"] = "Doktorlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="title">
+    <i class="uil uil-user-md"></i>
+    <span class="text">Doktorlar</span>
+</div>
+
+<div class="doctor-list">
+    @foreach (var doktor in Model)
+    {
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <span class="doctor-name">@doktor.Isim</span>
+                <span class="doctor-specialty">Uzmanlık: @doktor.Uzmanlik</span>
+                <span class="doctor-clinic">Poliklinik: @doktor.Poliklinik.Ad</span>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .doctor-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .doctor-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease;
+    }
+
+    .doctor-card:hover {
+        transform: scale(1.03);
+    }
+
+    .doctor-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .doctor-name {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: black;
+    }
+
+    .doctor-specialty,
+    .doctor-clinic {
+        font-size: 0.9em;
+        color: #ccc;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 1em;
+        transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+</style>
